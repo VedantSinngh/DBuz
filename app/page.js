@@ -1,101 +1,76 @@
-import Image from "next/image";
+"use client";
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useState } from 'react';
+// import styles from './page.module.css';
 
-export default function Home() {
+export default function WelcomeScreen() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  // In a real application, you would replace these with your actual slide content
+  const slides = [
+    {
+      id: 1,
+      title: "Welcome to the app",
+      description: "An app for convenient bus seat booking, schedules, payments, and travel updates in Sri Lanka."
+    },
+    {
+      id: 2,
+      title: "Book your journey",
+      description: "Search for buses, select seats, and secure your tickets with ease."
+    },
+    {
+      id: 3,
+      title: "Travel with comfort",
+      description: "Get real-time updates and manage your bookings on the go."
+    }
+  ];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex flex-col items-center justify-between min-h-screen bg-pink-50 px-4 py-8">
+      <div className="w-full max-w-md flex flex-col items-center justify-center flex-grow">
+        {/* Bus Logo */}
+        <div className="relative w-32 h-32 mb-8">
+          <div className="absolute w-32 h-32 bg-red-600 rounded-full opacity-80"></div>
+          <div className="absolute inset-4 flex items-center justify-center">
+            <svg viewBox="0 0 100 60" className="w-full h-full">
+              <path d="M10,40 Q10,10 50,10 Q90,10 90,40 L90,50 Q88,55 85,55 L80,55 L80,45 L20,45 L20,55 L15,55 Q12,55 10,50 Z" fill="black" />
+              <rect x="20" y="25" width="20" height="10" fill="white" opacity="0.7" />
+              <rect x="50" y="25" width="20" height="10" fill="white" opacity="0.7" />
+            </svg>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Slides */}
+        <div className="w-full text-center mb-12">
+          <h2 className="text-navy-700 text-xl font-bold mb-3">{slides[currentSlide].title}</h2>
+          <p className="text-gray-500 text-sm">{slides[currentSlide].description}</p>
+        </div>
+
+        {/* Slide indicators */}
+        <div className="flex justify-center space-x-2 mb-12">
+          {slides.map((slide, index) => (
+            <div 
+              key={slide.id} 
+              className={`w-2 h-2 rounded-full ${currentSlide === index ? 'bg-red-600' : 'bg-gray-300'}`}
+              onClick={() => setCurrentSlide(index)}
+            ></div>
+          ))}
+        </div>
+
+        {/* Action buttons */}
+        <div className="w-full flex flex-col items-center">
+          <Link href="/register" className="w-full">
+            <button className="w-full bg-red-600 text-white py-3 px-6 rounded-md font-medium mb-4">
+              Get Started
+            </button>
+          </Link>
+          <Link href="/login" className="text-red-600 text-sm font-medium">
+            Create an account
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
